@@ -34,6 +34,13 @@ public class SecurityConfig {
                 .csrf(auth -> auth.disable())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
+                .sessionManagement(auth -> auth
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true)
+                )
+                .sessionManagement(auth -> auth
+                        .sessionFixation().changeSessionId()
                 );
         return http.build();
     }
